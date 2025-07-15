@@ -7,23 +7,8 @@
     include 'includes/sign_in_db.php';
     // Verifier la connexion a la base de données
     include 'includes/db_connected_verify.php';
-
-    // Fonction pour créer un utilisateur
-    function createUser($bdd, $name, $email, $password,) {
-        // Hachage du mot de passe
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Préparer la requête
-        $sql = "INSERT INTO utilisateurs (nom, email, mot_de_passe) VALUES (:nom, :email, :mot_de_passe)";
-        $stmt = $bdd -> prepare($sql);
-
-        // Exécuter la requête
-        $stmt -> execute([
-            ':nom' => $name,
-            ':email' => $email,
-            ':mot_de_passe' => $hashedPassword
-        ]);
-    }
+    // Inclure la fonction pour créer un utilisateur
+    include 'includes/user_functions.php';
 
     // Vérifier si le formulaire a été soumis
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
