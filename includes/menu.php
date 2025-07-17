@@ -23,27 +23,12 @@
 <!-- Bouton pour ouvrir le menu -->
 <nav class="navbar bg-light shadow-sm">
     <div class="container-fluid">
-        <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+        <button id="openSidebarBtn" class="btn btn-outline-dark" type="button">
             <i class="fas fa-bars"></i>
+            <span class="navbar-text text-dark">Menu</span>
         </button>
-        <span class="navbar-text text-dark">Tableau de bord</span>
     </div>
 </nav>
-
-<!-- Menu latéral (offcanvas Bootstrap) -->
-<!-- <div class="offcanvas offcanvas-start bg-dark text-white offcanvas-custom-width" tabindex="-1" id="sidebar">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title"><i class="fas fa-bars me-2"></i> Navigation</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column gap-2">
-        <a href="#" class="btn btn-dark text-start"><i class="fas fa-home me-2"></i> Accueil</a>
-        <a href="listUsers.php" class="btn btn-dark text-start"><i class="fas fa-users me-2"></i> Liste des utilisateurs</a>
-        <a href="index.php" class="btn btn-dark text-start"><i class="fas fa-user-plus me-2"></i> Ajouter un utilisateur</a>
-        <a href="#" class="btn btn-dark text-start"><i class="fas fa-sign-out-alt me-2"></i> Déconnexion</a>
-    </div>
-</div> -->
-
 
 <!-- Menu latéral (offcanvas Bootstrap) btn-outline-secondary -->
 <div class="offcanvas offcanvas-start bg-light text-dark offcanvas-custom-width shadow-sm" tabindex="-1" id="sidebar">
@@ -63,3 +48,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const openBtn = document.getElementById('openSidebarBtn');
+
+    openBtn.addEventListener('mouseenter', () => {
+        const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(sidebar);
+        bsOffcanvas.show();
+    });
+
+    // Optionnel : refermer si la souris sort du menu
+    sidebar.addEventListener('mouseleave', () => {
+        const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(sidebar);
+        bsOffcanvas.hide();
+    });
+</script>
+
