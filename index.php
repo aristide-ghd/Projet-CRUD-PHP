@@ -1,3 +1,17 @@
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    include 'includes/sign_in_db.php'; // Inclure le fichier de connexion a la base
+    include 'includes/db_connected_verify.php'; // Verifier la connexion a la base
+
+    // Requête pour compter les utilisateurs
+    $requete = $bdd->query("SELECT COUNT(*) FROM utilisateurs");
+    $totalUtilisateurs = $requete->fetchColumn();
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -48,6 +62,20 @@
                         <p class="card-text">Terminez votre session en toute sécurité.</p>
                     </div>
                     <a href="#" class="btn btn-light mt-3">Se déconnecter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte total utilisateurs -->
+        <div class="row mb-5 w-100 mt-4 ms-0">
+            <div class="col-md-12">
+                <div class="card border-primary text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Utilisateurs enregistrés</h5>
+                        <p class="display-5 fw-bold text-primary">
+                            <?= $totalUtilisateurs ?>
+                        </p>
                     </div>
                 </div>
             </div>
