@@ -24,13 +24,13 @@
             empty($password) ||
             empty($confirmPassword)) {
 
-            header("Location: index.php?error=champsvides");
+            header("Location: createUserPage.php?error=champsvides");
             exit();
         }
 
         // Verifier la validité de l'email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            header("Location: index.php?error=emailinvalide");
+            header("Location: createUserPage.php?error=emailinvalide");
             exit();
         }
 
@@ -41,13 +41,13 @@
         $user = $stmt->fetch();
 
         if ($user) {
-            header("Location: index.php?error=emailexiste");
+            header("Location: createUserPage.php?error=emailexiste");
             exit();
         }
 
         // Validité du mot de passe
         if (strlen($password) < 8) {
-            header("Location: index.php?error=passwordcourt");
+            header("Location: createUserPage.php?error=passwordcourt");
             exit();
         }
 
@@ -55,7 +55,7 @@
             !preg_match('/[0-9]/', $password) || 
             !preg_match('/[!@#$%^&*()_+=\-]/', $password)) {
 
-            header("Location: index.php?error=passwordfaible");
+            header("Location: createUserPage.php?error=passwordfaible");
             exit();
         }
 

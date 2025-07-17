@@ -33,7 +33,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
 </head>
-<body class="p-5" style="background-color: #f2f2f2;">
+<body class="" style="background-color: #f2f2f2;">
+    <?php include 'includes/menu.php'; ?>
 
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -49,7 +50,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg">
