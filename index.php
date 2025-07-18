@@ -32,8 +32,8 @@
 <body style="background-color: #f2f2f2;">
     <?php include 'includes/menu.php'; ?>
 
-    <div class="container py-4">
-        <div class="text-center mb-5">
+    <div class="container py-4 mt-5">
+        <div class="text-center mb-4 mt-3">
             <h1 class="display-5 fw-bold">Bienvenue sur le Tableau de Bord</h1>
             <p class="lead">Gérez vos utilisateurs facilement depuis cet espace.</p>
         </div>

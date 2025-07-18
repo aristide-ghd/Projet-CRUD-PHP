@@ -21,7 +21,7 @@
 </style>
 
 <!-- Bouton pour ouvrir le menu -->
-<nav class="navbar bg-light shadow-sm">
+<nav class="navbar bg-light shadow-sm fixed-top">
     <div class="container-fluid">
         <button id="openSidebarBtn" class="btn btn-outline-dark" type="button">
             <i class="fas fa-bars"></i>

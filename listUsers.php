@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container py-5 mt-5">
         <h2 class="mb-4 text-center"><i class="fas fa-users"></i> Liste des utilisateurs</h2>
 
         <!-- Zone de recherche + bouton colonnes + bouton Ajouter -->
