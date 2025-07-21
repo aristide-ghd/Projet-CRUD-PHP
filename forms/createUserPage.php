@@ -40,7 +40,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body">
-                    Utilisateur créé avec succès.
+                    Utilisateur créé avec succès. Veuillez vérifier dans la liste des utilisateurs
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                         <h4><i class="fas fa-user-plus"></i> Créer un utilisateur</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="../actions/creaser.php">
+                        <form method="POST" action="../actions/createUserTreatment.php">
                         
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nom :</label>
@@ -164,7 +164,8 @@
 
         // Afficher la modal success si success=1 dans l'URL
         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            const modalElement = document.getElementById('successModal');
+            const successModal = new bootstrap.Modal(modalElement);
             successModal.show();
 
             // Nettoyer l'URL (supprimer ?success=1 sans recharger)
