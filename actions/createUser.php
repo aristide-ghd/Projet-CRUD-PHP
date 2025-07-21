@@ -4,11 +4,11 @@
     error_reporting(E_ALL);
 
     // Inclure le fichier de connexion
-    include 'includes/sign_in_db.php';
+    include '../includes/sign_in_db.php';
     // Verifier la connexion a la base de données
-    include 'includes/db_connected_verify.php';
+    include '../includes/db_connected_verify.php';
     // Inclure la fonction pour créer un utilisateur
-    include 'includes/user_functions.php';
+    include '../includes/user_functions.php';
 
     // Vérifier si le formulaire a été soumis
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,13 +24,13 @@
             empty($password) ||
             empty($confirmPassword)) {
 
-            header("Location: createUserPage.php?error=champsvides");
+            header("Location: ../forms/sign_up.php?error=champsvides");
             exit();
         }
 
         // Verifier la validité de l'email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            header("Location: createUserPage.php?error=emailinvalide");
+            header("Location: ../forms/sign_up.php?error=emailinvalide");
             exit();
         }
 
@@ -41,13 +41,13 @@
         $user = $stmt->fetch();
 
         if ($user) {
-            header("Location: createUserPage.php?error=emailexiste");
+            header("Location: ../forms/sign_up.php?error=emailexiste");
             exit();
         }
 
         // Validité du mot de passe
         if (strlen($password) < 8) {
-            header("Location: createUserPage.php?error=passwordcourt");
+            header("Location: ../forms/sign_up.php?error=passwordcourt");
             exit();
         }
 
@@ -55,20 +55,20 @@
             !preg_match('/[0-9]/', $password) || 
             !preg_match('/[!@#$%^&*()_+=\-]/', $password)) {
 
-            header("Location: createUserPage.php?error=passwordfaible");
+            header("Location: ../forms/sign_up.php?error=passwordfaible");
             exit();
         }
 
         // Vérifier si les mots de passe correspondent
         if ($password !== $confirmPassword) {
-            header("Location: index.php?error=mdpnonidentique");
+            header("Location: ../forms/sign_up.php?error=mdpnonidentique");
             exit();
         }
 
         // Appeler la fonction
         createUser($bdd, $name, $email, $password);
 
-        header("Location: index.php?success=1");
+        header("Location: ../forms/sign_up.php?success=1");
         exit();
     }
 ?>

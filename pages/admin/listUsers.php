@@ -3,11 +3,20 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    include 'includes/sign_in_db.php'; // Inclure le fichier de connexion a la base
-    include 'includes/db_connected_verify.php'; // Verifier la connexion a la base
-    include 'includes/user_functions.php'; // Inclure le fichier des fonctions de l'utilisateur
+    include '../../includes/sign_in_db.php'; // Inclure le fichier de connexion a la base
+    include '../../includes/db_connected_verify.php'; // Verifier la connexion a la base
+    include '../../includes/user_functions.php'; // Inclure le fichier des fonctions de l'utilisateur
+    include '../../includes/session_start_verify.php'; // Vérifier si l'utilisateur est connecté
 
     $users = readUsers($bdd);
+
+    if ($_SESSION['role'] !== 'admin') {
+        header("Location: ../../index.php?error=accesuserinterdit");
+        exit();
+    }
+
+    $nom = $_SESSION['nom'] ?? 'Utilisateur';
+    $email = $_SESSION['email'] ?? 'inconnu';
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +24,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Liste des utilisateurs</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <style>
         .dropdown-menu label {
             cursor: pointer;
@@ -26,7 +35,10 @@
 
 </head>
 <body style="background-color: #f2f2f2;">
-    <?php include 'includes/menu.php'; ?>
+    <?php 
+        $basePath = '../../';
+        include '../../includes/menu.php'; 
+    ?>
 
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -93,7 +105,7 @@
                     </div>
 
                     <!-- Bouton ajouter -->
-                    <a href="createUserPage.php" class="btn btn-success">
+                    <a href="../../forms/createUserPage.php" class="btn btn-success">
                         <i class="fas fa-user-plus"></i> Ajouter
                     </a>
                 </div>
@@ -127,7 +139,7 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a href="editpage.php?id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-warning" title="Modifier ce membre">
+                                    <a href="../../forms/editpage.php?id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-warning" title="Modifier ce membre">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button class="btn btn-sm btn-outline-danger" title="Supprimer" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $user['id'] ?>">
@@ -149,7 +161,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                            <a href="deleteUser.php?id=<?= $user['id'] ?>" class="btn btn-danger">Supprimer</a>
+                                            <a href="../../actions/deleteUser.php?id=<?= $user['id'] ?>" class="btn btn-danger">Supprimer</a>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +178,7 @@
     </div>
 
     <!-- Bootstrap JS local -->
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Modal de succès -->
     <script>
@@ -178,6 +190,7 @@
                 <?php elseif ($_GET['success'] == 'edited'): ?>
                     successMessage.innerHTML = "Utilisateur modifié avec succès.";
                 <?php endif; ?>
+                
                 new bootstrap.Modal(document.getElementById('successModal')).show();
                 window.history.replaceState(null, null, window.location.pathname);
             }

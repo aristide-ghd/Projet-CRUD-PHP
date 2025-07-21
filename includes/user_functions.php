@@ -1,6 +1,6 @@
 <?php
     // Fonction pour créer un utilisateur
-    function createUser($bdd, $name, $email, $password,) {
+    function createUser($bdd, $name, $email, $password) {
         // Hachage du mot de passe
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -16,6 +16,15 @@
         ]);
     }
 
+    // Fonction pour se connecter
+    function loginUser($email, $bdd) {
+        $stmt = $bdd -> prepare("SELECT * FROM utilisateurs WHERE email = :email");
+        $stmt -> bindParam(':email', $email);
+        $stmt -> execute();
+
+        return $stmt -> fetch(PDO::FETCH_ASSOC);
+    }
+
     // Liste des utilisateurs
     function readUsers($bdd) {
         $sql = "SELECT id, nom, email, role FROM utilisateurs";
@@ -23,7 +32,7 @@
         $stmt -> execute();
         
         // Retourner tous les utilisateurs avec fetch pour obtenir un tableau de résultats
-        return $stmt->fetchAll();
+        return $stmt -> fetchAll();
     }
 
     // Modification d'un utilisateur

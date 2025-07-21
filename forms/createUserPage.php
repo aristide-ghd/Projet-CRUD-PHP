@@ -1,3 +1,18 @@
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    include '../includes/session_start_verify.php'; // Vérifier si l'utilisateur est connecté
+
+    if ($_SESSION['role'] !== 'admin') {
+        header("Location: ../index.php?error=accesuserinterdit");
+        exit();
+    }
+
+    $nom = $_SESSION['nom'] ?? 'Utilisateur';
+    $email = $_SESSION['email'] ?? 'inconnu';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,13 +21,16 @@
   <title>Créer un utilisateur</title>
   
   <!-- Bootstrap CSS local -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome local -->
-  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../fontawesome/css/all.min.css">
 </head>
 
 <body class="d-flex flex-column" style="height: 100vh; background-color: #f2f2f2;">
-    <?php include 'includes/menu.php' ?>
+    <?php 
+        $basePath = '../';
+        include '../includes/menu.php'; 
+    ?>
 
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -42,15 +60,15 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
+    <div class="container py-5 mt-5">
+        <div class="row justify-content-center mt-3">
             <div class="col-md-6">
                 <div class="card shadow-lg">
                     <div class="card-header bg-primary pt-3 text-white text-center">
                         <h4><i class="fas fa-user-plus"></i> Créer un utilisateur</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="createUser.php">
+                        <form method="POST" action="../actions/creaser.php">
                         
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nom :</label>
@@ -114,7 +132,7 @@
     </div>
 
     <!-- Bootstrap JS local -->
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Mot de passe principale

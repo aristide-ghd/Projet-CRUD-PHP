@@ -1,24 +1,14 @@
-<?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-    session_start(); // Initialiser la session
-    $role = $_SESSION['role'] ?? '';
-?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Inscription</title>
   
   <!-- Bootstrap CSS local -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome local -->
-  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../fontawesome/css/all.min.css">
 </head>
 
 <body class="d-flex flex-column" style="height: 100vh; background-color: #f2f2f2;">
@@ -31,7 +21,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body">
-                  Connexion effectuée avec succès.Vous serez redirigé vers la page d'accueil
+                    Utilisateur créé avec succès. Vous serez redigiré vers la page de connexion
                 </div>
             </div>
         </div>
@@ -55,17 +45,25 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-6">
                 <div class="card shadow-lg">
-                    <div class="card-header bg-danger pt-3 text-white text-center">
-                        <h4><i class="fas fa-sign-in-alt"></i> Connectez-vous</h4>
+                    <div class="card-header bg-primary pt-3 text-white text-center">
+                        <h4><i class="fas fa-user-plus"></i> S'inscrire</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="actions/loginUser.php">
+                        <form method="POST" action="../actions/createUser.php">
+                        
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nom :</label>
+                                <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                                </div>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email :</label>
                                 <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="" class="form-control" name="email" id="email" >
+                                <input type="" class="form-control" name="email" id="email" required>
                                 </div>
                             </div>
 
@@ -77,7 +75,7 @@
                                         type="password" class="form-control" name="password" id="password" 
                                         pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-]).{8,}$"
                                         title="Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial"
-                                         
+                                        required 
                                     >
                                     <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
                                         <i class="fas fa-eye-slash"></i>
@@ -85,11 +83,28 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Confirmer mot de passe :</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input 
+                                        type="password" class="form-control" name="confirm_password" id="confirm_password" 
+                                        pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=\-]).{8,}$"
+                                        title="Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial"
+                                        required 
+                                    >
+                                    <span class="input-group-text" id="toggleConfirmPassword" style="cursor: pointer;">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+
                             <div class="d-grid">
-                                <button class="btn btn-danger col-12" type="submit" name="valider">
-                                  <i class="fas fa-lock me-2"></i>Se connecter
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Enregistrer
                                 </button><br>
-                                <p class="m-auto">Vous n'avez pas de compte?<a href="forms/sign_up.php">Inscrivez-vous ici</a></p>
+                                <p class="m-auto">Vous avez déjà un compte?<a href="../index.php">Connectez-vous ici</a></p>
                             </div>
                         </form>
                     </div>
@@ -99,7 +114,7 @@
     </div>
 
     <!-- Bootstrap JS local -->
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Mot de passe principale
@@ -129,70 +144,48 @@
             this.querySelector('i').classList.toggle('fa-eye-slash');
         });
 
-    </script>
-
-    <script>
-        // Vérifie si 'success=1' est dans l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const role = "<?php echo $role; ?>"; // injecter le rôle PHP dans JS
-        const success = urlParams.get('success');
-        const error = urlParams.get('error');
-
-        if (success === '1') {
+        // Afficher la modal success si success=1 dans l'URL
+        <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
             const modalElement = document.getElementById('successModal');
             const successModal = new bootstrap.Modal(modalElement);
             successModal.show();
 
             modalElement.addEventListener('shown.bs.modal', function () {
                 setTimeout(function () {
-                    if (role === 'admin') {
-                        window.location.href = "pages/admin/dashboard.php"; 
-                    } else if (role === 'user') {
-                        window.location.href = "pages/user/interface_user.php";
-                    } else {
-                        window.location.href = "index.php?error=roleinvalide"; // Redirection par défaut
-                    }
-                }, 3000);
+                    window.location.href = "../index.php"; // redirection
+                }, 3000); // 3 secondes
             });
 
+            // Supprimer le paramètre success=1 de l’URL sans recharger
             window.history.replaceState(null, null, window.location.pathname);
-        }
+        <?php endif; ?>
 
-        if (error) {
+        // Afficher la modal erreur si error dans l'URL 
+        <?php if (isset($_GET['error'])): ?>
             const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
             const errorMessage = document.getElementById('errorMessage');
 
-            switch (error) {
-                case 'champsvides':
-                    errorMessage.innerHTML = "Tous les champs doivent être remplis.";
-                    break;
-                case 'emailinconnu':
-                    errorMessage.innerHTML = "Aucun compte trouvé avec cet email.";
-                    break;
-                case 'motdepasseincorrect':
-                    errorMessage.innerHTML = "Le mot de passe est incorrect.";
-                    break;
-                case 'sessionexpirée': 
-                    errorMessage.innerHTML = "Votre session est expirée.";
-                    break;
-                case 'roleinvalide': 
-                    errorMessage.innerHTML = "Veuillez-vous inscrire";
-                    break;
-                case 'accesadmininterdit': 
-                    errorMessage.innerHTML = "Vous avez tenté d'accéder à une page réservées aux utilisateurs. Nous vous avons éjecter";
-                    break;
-                case 'accesuserinterdit': 
-                    errorMessage.innerHTML = "Vous avez tenté d'accéder à une page réservées aux administrateurs. Nous vous avons éjecter";
-                    break;
-                default:
-                    errorMessage.innerHTML = "Une erreur est survenue. Veuillez réessayer.";
-            }
+            <?php if ($_GET['error'] == 'champsvides'): ?>
+                errorMessage.innerHTML = "Tous les champs doivent être remplis.";
+            <?php elseif ($_GET['error'] == 'emailinvalide'): ?>
+                errorMessage.innerHTML = "Adresse email invalide.";
+            <?php elseif ($_GET['error'] == 'emailexiste'): ?>
+                errorMessage.innerHTML = "Cet email est déjà utilisé. Veuillez en choisir un autre.";
+            <?php elseif ($_GET['error'] == 'passwordcourt'): ?>
+                errorMessage.innerHTML = "Le mot de passe doit contenir au moins 8 caractères.";
+            <?php elseif ($_GET['error'] == 'passwordfaible'): ?>
+                errorMessage.innerHTML = "Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial.";
+            <?php elseif ($_GET['error'] == 'mdpnonidentique'): ?>
+                errorMessage.innerHTML = "Les deux mots de passe ne correspondent pas.";
+            <?php else: ?>
+                errorMessage.innerHTML = "Une erreur est survenue. Veuillez réessayer.";
+            <?php endif; ?>
 
             errorModal.show();
             window.history.replaceState(null, null, window.location.pathname);
-        }
-    </script>
+        <?php endif; ?>
 
+    </script>
 
 </body>
 </html>

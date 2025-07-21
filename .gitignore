@@ -2,3 +2,5 @@
 /bootstrap
 #Ignorer le dossier fontawesome
 /fontawesome
+#Ignorer le dossier bootstrap-icons
+/bootstrap-icons
