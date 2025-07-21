@@ -173,7 +173,7 @@
                     errorMessage.innerHTML = "Le mot de passe est incorrect.";
                     break;
                 case 'sessionexpirée': 
-                    errorMessage.innerHTML = "Votre session est expirée.";
+                    errorMessage.innerHTML = "Votre session est expirée. Veuillez-vous connecter";
                     break;
                 case 'roleinvalide': 
                     errorMessage.innerHTML = "Veuillez-vous inscrire";

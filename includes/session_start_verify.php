@@ -5,7 +5,7 @@
     // Vérification si l'utilisateur est connecté
     if(!isset($_SESSION['logged_in'])) {
         // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
-        header("Location: ../index.php?error=sessionexpirée");
+        header("Location: /Projet-CRUD/index.php?error=sessionexpirée");
         exit;
     }
 ?>

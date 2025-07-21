@@ -85,6 +85,13 @@
                         </div>
                     </li>
 
+                    <!-- Lien pour changer le mot de passe -->
+                    <li class="d-flex align-items-center mt-3">
+                        <a href="<?= $basePath ?>pages/change_password.php" class="btn btn-light border text-start w-100">
+                            <i class="fas fa-key me-2 text-success"></i>
+                            <span>Mot de passe</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 

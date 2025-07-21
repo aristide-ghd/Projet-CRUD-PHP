@@ -26,7 +26,7 @@
     }
 
     if ($_SESSION['role'] !== 'admin') {
-        header("Location: ../../index.php?error=accesuserinterdit");
+        header("Location: ../index.php?error=accesuserinterdit");
         exit();
     }
 
