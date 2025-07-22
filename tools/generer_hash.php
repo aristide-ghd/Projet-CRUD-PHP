@@ -1,6 +1,6 @@
 <?php
     // Mot de passe à hacher
-    $motDePasse = "";
+    $motDePasse = "password004";
 
     // Génération du hash
     $hash = password_hash($motDePasse, PASSWORD_DEFAULT);

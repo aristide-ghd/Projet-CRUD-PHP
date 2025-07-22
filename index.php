@@ -116,19 +116,6 @@
             icon.classList.toggle('fa-eye-slash');
         });
 
-        // Confirmation mot de passe
-        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-        const confirmPasswordInput = document.getElementById('confirm_password');
-
-        toggleConfirmPassword.addEventListener('click', function () {
-            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPasswordInput.setAttribute('type', type);
-
-            // Changer l'icone
-            this.querySelector('i').classList.toggle('fa-eye');
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-
     </script>
 
     <script>
@@ -192,7 +179,5 @@
             window.history.replaceState(null, null, window.location.pathname);
         }
     </script>
-
-
 </body>
 </html>

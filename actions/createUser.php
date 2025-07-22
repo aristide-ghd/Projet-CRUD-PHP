@@ -36,9 +36,9 @@
 
         // Vérifier si l'email existe déjà
         $sql = "SELECT * FROM utilisateurs WHERE email = :email";
-        $stmt = $bdd->prepare($sql);
-        $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch();
+        $stmt = $bdd -> prepare($sql);
+        $stmt -> execute([':email' => $email]);
+        $user = $stmt -> fetch();
 
         if ($user) {
             header("Location: ../forms/sign_up.php?error=emailexiste");

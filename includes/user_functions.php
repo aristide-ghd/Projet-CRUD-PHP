@@ -52,4 +52,29 @@
         $stmt = $bdd -> prepare($sql);
         $stmt -> execute([':id' => $id]);
     }
+
+    // Fonction pour changer le mot de passe après vérification de l'ancien
+    function changePassword($email, $oldPassword, $newPassword, $bdd) {
+        // Récupérer l'utilisateur
+        $stmt = $bdd -> prepare("SELECT mot_de_passe FROM utilisateurs WHERE email = :email");
+        $stmt -> bindParam(':email', $email);
+        $stmt -> execute();
+        $user = $stmt -> fetch(PDO::FETCH_ASSOC);
+
+        // Vérifier si l'utilisateur existe et que l'ancien mot de passe est correct
+        if ($user && password_verify($oldPassword, $user['mot_de_passe'])) {
+            // Hacher le nouveau mot de passe
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+            // Mettre à jour le mot de passe
+            $updateStmt = $bdd -> prepare("UPDATE utilisateurs SET mot_de_passe = :newPassword WHERE email = :email");
+            $updateStmt -> bindParam(':newPassword', $hashedPassword);
+            $updateStmt -> bindParam(':email', $email);
+
+            return $updateStmt -> execute(); // true si la mise à jour a réussi
+        } else {
+            return false; // Ancien mot de passe incorrect
+        }
+    }
+
 ?>
