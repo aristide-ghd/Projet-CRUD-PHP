@@ -15,42 +15,6 @@ Ce projet est une application web de gestion d'utilisateurs (CRUD) développée 
 - **Thème sombre/clair** et **changement de langue** (FR/EN, partiel)
 - **Sécurité** : hachage des mots de passe, vérification de session, validation des entrées
 
-## Structure du projet
-
-```
-.
-├── index.php
-├── actions/
-│   ├── createUser.php
-│   ├── deleteUser.php
-│   ├── editUser.php
-│   ├── loginUser.php
-│   └── logout.php
-├── assets/
-├── bootstrap/
-├── bootstrap-icons/
-├── fontawesome/
-├── forms/
-│   ├── createUserPage.php
-│   ├── editpage.php
-│   └── sign_up.php
-├── includes/
-│   ├── db_connected_verify.php
-│   ├── menu.php
-│   ├── session_start_verify.php
-│   ├── sign_in_db.php
-│   └── user_functions.php
-├── pages/
-│   ├── admin/
-│   │   ├── dashboard.php
-│   │   └── listUsers.php
-│   └── user/
-│       └── interface_user.php
-├── tools/
-│   └── generer_hash.php
-└── .gitignore
-```
-
 ## Installation
 
 1. **Cloner le dépôt**  

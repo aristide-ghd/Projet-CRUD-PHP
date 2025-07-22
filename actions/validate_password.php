@@ -15,11 +15,10 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_SESSION['email']; // Email de l'utilisateur connecté
+        $email = $_SESSION['email'];
         $oldPassword = $_POST['old_password'];
         $newPassword = $_POST['new_password'];
         $confirmPassword = $_POST['confirm_password'];
-        $success = changePassword($email, $oldPassword, $newPassword, $bdd);
 
         // Vérifier si les champs sont vides
         if (empty($oldPassword) || empty($newPassword) || empty($confirmPassword)) {
@@ -33,24 +32,18 @@
             exit();
         }
 
-        // Validité du mot de passe
+        // Vérifier si le nouveau mot de passe est suffisamment long
         if (strlen($newPassword) < 8) {
             header("Location: ../pages/change_password.php?error=password_short");
             exit();
         }
 
-        // Verifier la force du mot de passe
+        // Vérifier la complexité du mot de passe
         if (!preg_match('/[A-Z]/', $newPassword) || 
             !preg_match('/[0-9]/', $newPassword) || 
             !preg_match('/[!@#$%^&*()_+=\-]/', $newPassword)) {
 
             header("Location: ../pages/change_password.php?error=password_weak");
-            exit();
-        }
-
-        // Vérifier si l'ancien mot de passe est correct
-        if (!$success) {
-            header("Location: ../pages/change_password.php?error=password_incorrect");
             exit();
         }
 
@@ -60,10 +53,17 @@
             exit();
         }
 
-        // Changement de mot de passe réussi
-        if ($success) {
-            header("Location: ../pages/change_password.php?success=1");
+        // Vérifier que l’ancien mot de passe est correct et changer le mot de passe
+        $success = changePassword($email, $oldPassword, $newPassword, $bdd);
+
+        if (!$success) {
+            header("Location: ../pages/change_password.php?error=password_incorrect");
             exit();
         }
+
+        // Succès
+        header("Location: ../pages/change_password.php?success=1");
+        exit();
     }
+
 ?>
